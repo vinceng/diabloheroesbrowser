@@ -39,15 +39,12 @@
     </style>
 
     <style name="TextAppearance.Diablo.Widget.ActionBar.Title" parent="TextAppearance.Sherlock.Widget.ActionBar.Title">
-        <item name="textColor">@color/orange</item>
         <item name="android:textColor">@color/orange</item>
     </style>
 
     <style name="Widget.Diablo.ActionBar.TabText" parent="Widget.Sherlock.ActionBar.TabText">
-        <item name="textColor">@color/ad_tab_orange</item>
         <item name="android:textColor">@color/ad_tab_orange</item>
         <item name="android:textSize">10dp</item>
-        <item name="textSize">10dp</item>
     </style>
     
     <style name="Widget.Diablo.DropDownItem.Spinner" parent="Widget.Sherlock.DropDownItem.Spinner">
@@ -55,7 +52,6 @@
     </style>
 
     <style name="TextAppearance.Diablo.Widget.DropDownItem" parent="TextAppearance.Sherlock.Widget.DropDownItem">
-        <item name="textColor">@color/diablo_orange</item>
         <item name="android:textColor">@color/diablo_orange</item>
     </style>
     
@@ -64,7 +60,6 @@
     </style>
     
     <style name="TextAppearance.Diablo.Widget.TextView.SpinnerItem" parent="TextAppearance.Sherlock.Widget.TextView.SpinnerItem">
-        <item name="textColor">@color/diablo_orange</item>
         <item name="android:textColor">@color/diablo_orange</item>
     </style>
     

@@ -13,44 +13,51 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class PassiveSkillView extends RelativeLayout {
-	private TextView skillName;
-	private ImageView skillImage;
-
-	public PassiveSkillView(Context context) {
+public class PassiveSkillView extends RelativeLayout
+{
+	private TextView	skillName;
+	private ImageView	skillImage;
+	
+	public PassiveSkillView(Context context)
+	{
 		super(context);
 		init(context);
 	}
-
-	public PassiveSkillView(Context context, AttributeSet attrs) {
+	
+	public PassiveSkillView(Context context, AttributeSet attrs)
+	{
 		super(context, attrs);
 		init(context);
 	}
-
-	public PassiveSkillView(Context context, AttributeSet attrs, int defStyle) {
+	
+	public PassiveSkillView(Context context, AttributeSet attrs, int defStyle)
+	{
 		super(context, attrs, defStyle);
 		init(context);
 	}
-
-	private void init(Context context) {
-		LayoutInflater li = (LayoutInflater) context
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	
+	private void init(Context context)
+	{
+		LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		li.inflate(R.layout.passive_skill_button, this, true);
-
+		
 		skillName = (TextView) findViewById(R.id.skill_name);
 		skillImage = (ImageView) findViewById(R.id.skill_icon);
 	}
-
-	public void setSkillName(String text) {
+	
+	public void setSkillName(String text)
+	{
 		skillName.setText(text);
 	}
-
-	public void setSkillImage(Drawable drawable) {
+	
+	public void setSkillImage(Drawable drawable)
+	{
 		skillImage.setImageDrawable(drawable);
 	}
-
+	
 	@Override
-	public void setOnClickListener(OnClickListener l) {
+	public void setOnClickListener(OnClickListener l)
+	{
 		Button btn = (Button) findViewById(R.id.skill_button);
 		btn.setOnClickListener(l);
 	}

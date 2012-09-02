@@ -12,64 +12,69 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.hydrasoftworks.diablo.model.BattleTag;
 
-public class BattleTagsDataSource {
-	private SQLiteDatabase database;
-	private DatabaseHelper dbHelper;
-
-	private String[] allColumns = { BattleTag.BATTLETAG_ID,
-			BattleTag.BATTLETAG, BattleTag.VALUE, BattleTag.SERVER };
-
-	public BattleTagsDataSource(Context context) {
+public class BattleTagsDataSource
+{
+	private SQLiteDatabase	database;
+	private DatabaseHelper	dbHelper;
+	
+	private String[]		allColumns	= { BattleTag.BATTLETAG_ID, BattleTag.BATTLETAG, BattleTag.VALUE, BattleTag.SERVER };
+	
+	public BattleTagsDataSource(Context context)
+	{
 		dbHelper = new DatabaseHelper(context);
 	}
-
-	public void open() throws SQLException {
+	
+	public void open() throws SQLException
+	{
 		database = dbHelper.getWritableDatabase();
 	}
-
-	public void close() {
+	
+	public void close()
+	{
 		dbHelper.close();
 	}
-
-	public BattleTag createOrGetBattleTag(String text, String server) {
+	
+	public BattleTag createOrGetBattleTag(String text, String server)
+	{
 		BattleTag tag = findBattleTag(text, server);
-		if (tag == null)
+		if(tag == null)
 			tag = createBattleTag(text, server);
-		else {
+		else
+		{
 			tag.setBattleTagText(text);
 			updateBattleTag(tag);
 		}
 		return tag;
 	}
-
-	private BattleTag createBattleTag(String text, String server) {
-
+	
+	private BattleTag createBattleTag(String text, String server)
+	{
+		
 		ContentValues values = new ContentValues();
 		values.put(BattleTag.BATTLETAG, text);
 		values.put(BattleTag.VALUE, 1);
 		values.put(BattleTag.SERVER, server);
 		long insertId = database.insert(BattleTag.TABLE_NAME, null, values);
-		Cursor cursor = database.query(BattleTag.TABLE_NAME, allColumns,
-				BattleTag.BATTLETAG_ID + " = " + insertId, null, null, null,
-				null);
+		Cursor cursor = database.query(BattleTag.TABLE_NAME, allColumns, BattleTag.BATTLETAG_ID + " = " + insertId, null, null, null, null);
 		cursor.moveToFirst();
 		BattleTag tag = cursorToBattleTag(cursor);
 		cursor.close();
 		return tag;
-
+		
 	}
-
-	private void updateBattleTag(BattleTag tag) {
+	
+	private void updateBattleTag(BattleTag tag)
+	{
 		ContentValues values = new ContentValues();
 		values.put(BattleTag.BATTLETAG_ID, tag.getId());
 		values.put(BattleTag.BATTLETAG, tag.getBattleTagText());
 		values.put(BattleTag.VALUE, tag.getValue() + 1);
 		values.put(BattleTag.SERVER, tag.getServer());
-		database.update(BattleTag.TABLE_NAME, values, BattleTag.BATTLETAG_ID
-				+ " = " + tag.getId(), null);
+		database.update(BattleTag.TABLE_NAME, values, BattleTag.BATTLETAG_ID + " = " + tag.getId(), null);
 	}
-
-	private BattleTag cursorToBattleTag(Cursor cursor) {
+	
+	private BattleTag cursorToBattleTag(Cursor cursor)
+	{
 		BattleTag tag = new BattleTag();
 		tag.setId(cursor.getLong(0));
 		tag.setBattleTagText(cursor.getString(1));
@@ -77,33 +82,33 @@ public class BattleTagsDataSource {
 		tag.setServer(cursor.getString(3));
 		return tag;
 	}
-
-	public void deleteBattleTag(BattleTag tag) {
+	
+	public void deleteBattleTag(BattleTag tag)
+	{
 		long id = tag.getId();
-		database.delete(BattleTag.TABLE_NAME, BattleTag.BATTLETAG_ID + " = "
-				+ id, null);
+		database.delete(BattleTag.TABLE_NAME, BattleTag.BATTLETAG_ID + " = " + id, null);
 	}
-
-	private BattleTag findBattleTag(String name, String server) {
-		Cursor cursor = database.query(BattleTag.TABLE_NAME, allColumns,
-				BattleTag.BATTLETAG + " = '" + name + "' COLLATE NOCASE AND " + BattleTag.SERVER
-						+ " = '" + server + "'", null, null, null, null);
+	
+	private BattleTag findBattleTag(String name, String server)
+	{
+		Cursor cursor = database.query(BattleTag.TABLE_NAME, allColumns, BattleTag.BATTLETAG + " = '" + name + "' COLLATE NOCASE AND " + BattleTag.SERVER + " = '" + server + "'", null, null, null, null);
 		BattleTag tag = null;
 		cursor.moveToFirst();
-		if (cursor.getCount() > 0)
+		if(cursor.getCount() > 0)
 			tag = cursorToBattleTag(cursor);
 		cursor.close();
 		return tag;
 	}
-
-	public List<BattleTag> getAllBattleTag() {
+	
+	public List<BattleTag> getAllBattleTag()
+	{
 		List<BattleTag> tags = new ArrayList<BattleTag>();
-
-		Cursor cursor = database.query(BattleTag.TABLE_NAME, allColumns, null,
-				null, null, null, null);
-
+		
+		Cursor cursor = database.query(BattleTag.TABLE_NAME, allColumns, null, null, null, null, null);
+		
 		cursor.moveToFirst();
-		while (!cursor.isAfterLast()) {
+		while (!cursor.isAfterLast())
+		{
 			BattleTag tag = cursorToBattleTag(cursor);
 			tags.add(tag);
 			cursor.moveToNext();
